@@ -12,6 +12,11 @@ class AddRelationshipFieldsToEventsTable extends Migration
             $table->unsignedInteger('event_id')->nullable();
 
             $table->foreign('event_id', 'event_fk_556522')->references('id')->on('events');
+
+
+
+            $table->unsignedInteger('tutor_id');
+            $table->foreign('tutor_id')->references('id')->on('users');
         });
     }
 }

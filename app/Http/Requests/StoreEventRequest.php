@@ -33,6 +33,9 @@ class StoreEventRequest extends FormRequest
             'recurrence' => [
                 'required',
             ],
+            'tutor_id'       => [
+                'required',
+            ],
         ];
     }
 }

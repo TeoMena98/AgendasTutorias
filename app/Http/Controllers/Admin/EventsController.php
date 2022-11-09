@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyEventRequest;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use Gate;
+use App\USer;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,11 +28,19 @@ class EventsController extends Controller
     {
         abort_if(Gate::denies('event_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.events.create');
+
+
+        $relacionEloquent = 'roles';
+        $user_roles = User::whereHas($relacionEloquent, function ($query) {
+            return $query->where('title', '=', 'User');
+        })->get();
+
+        return view('admin.events.create', compact('user_roles'));
     }
 
     public function store(StoreEventRequest $request)
     {
+
         Event::create($request->all());
 
         return redirect()->route('admin.systemCalendar');
@@ -43,8 +52,13 @@ class EventsController extends Controller
 
         $event->load('event')
             ->loadCount('events');
+            
+            $relacionEloquent = 'roles';
+            $user_roles = User::whereHas($relacionEloquent, function ($query) {
+                return $query->where('title', '=', 'User');
+            })->get();
 
-        return view('admin.events.edit', compact('event'));
+        return view('admin.events.edit', compact('event', 'user_roles'));
     }
 
     public function update(UpdateEventRequest $request, Event $event)

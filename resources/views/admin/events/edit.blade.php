@@ -50,6 +50,25 @@
                     {{ trans('cruds.event.fields.end_time_helper') }}
                 </p>
             </div>
+
+
+            <div class="form-group {{ $errors->has('tutor_id') ? 'has-error' : '' }}">
+                <label for="tutor_id">{{ trans('cruds.event.fields.tutor_id') }}*</label>
+                <select name="tutor_id" id="tutor_id" class="form-control select2"  required>
+                    @foreach($user_roles as $id => $user_roles)
+                    <option value="{{ $user_roles->id }}" {{ $user_roles->id == $event->tutor_id ? 'selected' : '' }}>{{ $user_roles->name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('tutor_id'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('tutor_id') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.user.fields.roles_helper') }}
+                </p>
+            </div>
+
             @if(!$event->event && !$event->events_count)
                 <div class="form-group {{ $errors->has('recurrence') ? 'has-error' : '' }}">
                     <label>{{ trans('cruds.event.fields.recurrence') }}*</label>

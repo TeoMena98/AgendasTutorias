@@ -83,4 +83,18 @@ class UsersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+
+    public function tutors(User $user){
+        
+
+dd($user->users()->get([
+    'users.id', 'users.name'
+]));
+
+        return $user->users()->get([
+            'users.id', 'users.name'
+        ]);
+
+    }
 }

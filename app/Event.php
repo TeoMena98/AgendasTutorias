@@ -21,19 +21,20 @@ class Event extends Model
     ];
 
     const RECURRENCE_RADIO = [
-        'none'    => 'None',
-        'daily'   => 'Daily',
-        'weekly'  => 'Weekly',
-        'monthly' => 'Monthly',
+        'none'    => 'Ninguna',
+        'daily'   => 'Diario',
+        'weekly'  => 'Semanal',
+        'monthly' => 'Mensual',
     ];
 
     protected $fillable = [
         'name',
         'end_time',
+        'event_id',
+        'tutor_id',
+        'start_time',
         'recurrence',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+      
     ];
 
     public function events()

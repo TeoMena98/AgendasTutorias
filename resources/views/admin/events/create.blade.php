@@ -45,6 +45,27 @@
                     {{ trans('cruds.event.fields.end_time_helper') }}
                 </p>
             </div>
+
+            @can('user_management_access')
+            <div class="form-group {{ $errors->has('tutor') ? 'has-error' : '' }}">
+                        <label for="tutor">{{ trans('cruds.appointment.fields.tutor') }}*</label>
+                        <select name="tutor_id" id="tutor_id" class="form-control select2" required>
+                    @foreach($user_roles as $id => $user_roles)
+                        <option value="{{$user_roles->id}}" > {{$user_roles->name}}</option>
+                    @endforeach
+                </select>                         @if($errors->has('tutor'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('tutor') }}
+                        </em>
+                        @endif
+                        <p class="helper-block">
+                            {{ trans('cruds.appointment.fields.email_helper') }}
+                        </p>
+                    </div>
+
+            @endcan
+
+
             <div class="form-group {{ $errors->has('recurrence') ? 'has-error' : '' }}">
                 <label>{{ trans('cruds.event.fields.recurrence') }}*</label>
                 @foreach(App\Event::RECURRENCE_RADIO as $key => $label)

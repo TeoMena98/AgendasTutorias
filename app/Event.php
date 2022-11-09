@@ -30,8 +30,6 @@ class Event extends Model
     protected $fillable = [
         'name',
         'end_time',
-        'event_id',
-        'start_time',
         'recurrence',
         'created_at',
         'updated_at',

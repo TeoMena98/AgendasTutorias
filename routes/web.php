@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Appointments
     Route::delete('appointment/destroy', 'AppointmentsController@massDestroy')->name('appointment.massDestroy');
+    Route::get('appointment/create_1', 'AppointmentsController@create_1');
     Route::resource('appointment', 'AppointmentsController');
 
 

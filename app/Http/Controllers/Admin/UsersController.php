@@ -88,9 +88,7 @@ class UsersController extends Controller
     public function tutors(User $user){
         
 
-dd($user->users()->get([
-    'users.id', 'users.name'
-]));
+
 
         return $user->users()->get([
             'users.id', 'users.name'

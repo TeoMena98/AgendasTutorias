@@ -17,6 +17,10 @@ class AddRelationshipFieldsToEventsTable extends Migration
 
             $table->unsignedInteger('tutor_id');
             $table->foreign('tutor_id')->references('id')->on('users');
+
+            
+            $table->unsignedInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses');
         });
     }
 }

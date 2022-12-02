@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Event extends Model
 {
     use SoftDeletes;
+    const CREATED_AT = null;
+    const UPDATED_AT = null;
 
     public $table = 'events';
 
     protected $dates = [
         'end_time',
         'start_time',
-        'created_at',
-        'updated_at',
+       
         'deleted_at',
     ];
 

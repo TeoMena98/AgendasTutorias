@@ -1,100 +1,75 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.agenda')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+@section('content')
+    <div class="container">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-md-8">
+    
+          
             </div>
         </div>
-    </body>
-</html>
+
+        {{-- Input --}}
+        <form action="{{ url('/') }}" method="GET">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">Buscar Tutores</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-8">
+                                <input type="date" name='fecha' id="datepicker" class='form-control'>
+                            </div>
+                            <div class="col-md-6 col-sm-4">
+                                <button class="btn btn-primary" type="submit">Ir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {{-- Display doctors --}}
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header">Lista de Tutores Disponibles: @isset($formatDate) {{ $formatDate }}
+                    @endisset
+                </div>
+                <div class="card-body table-responsive-sm">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                
+                                <th>Tutor</th>
+                                <th>Materia</th>
+                                <th>Agendar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($doctors as $key=>$doctor)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                   
+                                    <td>{{ $doctor->name }}</td>
+                                    <td>{{ $doctor->title }}</td>
+                                    @if (Auth::check() && auth()->user()->role->name == 'Estudiante')
+                                        <td>
+                                            <a href="{{ route('create.appointment', [$doctor->user_id, $doctor->date]) }}"><button
+                                                    class="btn btn-primary">Agendar</button></a>
+                                        </td>
+                                    @else
+                                        <td>solo para ESTUDIANTES</td>
+                                    @endif
+                                </tr>
+                            @empty
+                                <td>No hay tutores disponibles</td>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+@endsection

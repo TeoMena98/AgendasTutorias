@@ -169,6 +169,7 @@ return [
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => '',
             'event'             => 'Evento',
+            'course'             => 'Materia',
             'event_helper'      => '',
             'tutor_id'        => 'Tutor',
         ],

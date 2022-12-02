@@ -42,42 +42,39 @@ class AppointmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function beforecreate()
+    public function create_1()
     {
-        //
-        abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $universities = University::all()->pluck('title', 'id');
-        $careers = Career::all()->pluck('title', 'id');
-        $courses = Course::all()->pluck('title', 'id');
-        $events = Event::all();
 
 
-
-        $relacionEloquent = 'roles'; //Nombre de tu relacion con roles en el modelo User
-
-        $user_roles = User::whereHas($relacionEloquent, function ($query) {
-            return $query->where('title', '=', 'User');
-        })->get();
+$coursos = Course::all();
 
 
-
-        return view('admin.appointment.beforecreate', compact( 'careers', 'universities', 'courses', 'events', 'user_roles'));
+        return view('admin.appointment.create_1', compact('coursos'));
     }
     public function create()
     {
         //
+        $fecha= request('fecha');
         abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $universities = University::all()->pluck('title', 'id');
         $careers = Career::all()->pluck('title', 'id');
         $courses = Course::all()->pluck('title', 'id');
       
-
-        $events_time =DB::table('events')
+        $events_time = DB::table('events')->where('start_time', 'LIKE',"%{$fecha}%")
+        ->join('users', 'users.id', 'events.tutor_id')
+        ->join('courses', 'courses.id', 'events.course_id')
         ->selectRaw('date(end_time) As Fecha')
         ->get();
-        $events_hour =DB::table('events')
+   
+
+        $events_hour = DB::table('events')->where('start_time', 'LIKE',"%{$fecha}%")
+        ->join('users', 'users.id', 'events.tutor_id')
+        ->join('courses', 'courses.id', 'events.course_id')
         ->selectRaw('time(start_time) As Hora_inicial, time(end_time) As Hora_final')
         ->get();
+
+
+  
 //  dd($events_hour);
         $relacionEloquent = 'roles'; //Nombre de tu relacion con roles en el modelo User
 

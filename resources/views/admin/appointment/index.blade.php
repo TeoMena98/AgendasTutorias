@@ -3,7 +3,7 @@
 @can('appointment_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.appointment.create") }}">
+            <a class="btn btn-success" href="appointment/create_1">
                 {{ trans('global.add') }} {{ trans('cruds.appointment.title_singular') }}
             </a>
         </div>
